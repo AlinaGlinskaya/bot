@@ -4,7 +4,7 @@ const token ='6173423791:AAEg-GTufUbz8tTrallnBsX0Mt3zsX5dc9w';
 
 const bot = new TelegramApi(token, {polling: true});
 
-const {question1Options} = require('./data');
+const {question1Options, question2Options} = require('./data');
 
 const generateInlineKeyboard = (options, data, rightAnswer) => {
 	const keyboard = JSON.parse(options.reply_markup).inline_keyboard;
@@ -37,7 +37,7 @@ const firstQuestion = (msg) => {
 				reply = 'Именно так! Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
 				break;
 				case '2':
-					reply = 'Несмотря на свою отвязную внешность, Билл был старостой школы и превосходным студентом, набравшим 12 «Превосходно» на СОВ. А вот Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
+					reply = 'Несмотря на свою отвязную внешность, Билл был старостой школы и отличным студентом, набравшим 12 «Превосходно» на СОВ. А вот Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
 					break;
 				case '3':
 					reply = 'Ну уж нет, «идеальный» Перси был идеален во всём, в том числе на СОВ. 11 «Превосходно» и 1 «Выше ожидаемого» (по Защите от Тёмных Искусств) получила Гермиона';
@@ -53,37 +53,38 @@ const firstQuestion = (msg) => {
 	}
 };
 
-const secondQuestion = (msg) => {
-	const data = msg.data;
-	const chatId = msg.message.chat.id;
-	let reply = '';
+const secondQuestion = (chatId) => {
 	bot.sendMessage(chatId, 'Второй вопрос', question2Options);
-	if (data >= 1 && data <= 4) {
-		const rightAnswer = '1';
-		bot.editMessageReplyMarkup({inline_keyboard: generateInlineKeyboard(question2Options, data, rightAnswer)}, {chat_id: chatId, message_id: msg.message.message_id})
-		.then(() => {
-			return bot.sendPhoto(chatId, 'image/1.jpg');
-		})
-		.then(() => {
-			switch(data) {
-				case '1': 
-				reply = 'Именно так! Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
-				break;
-				case '2':
-					reply = 'Несмотря на свою отвязную внешность, Билл был старостой школы и превосходным студентом, набравшим 12 «Превосходно» на СОВ. А вот Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
+	let reply = '';
+	bot.on('callback_query', msg => {
+		const data = msg.data;
+		if (data >= 5 && data <= 8) {
+			const rightAnswer = '6';
+			bot.editMessageReplyMarkup({inline_keyboard: generateInlineKeyboard(question2Options, data, rightAnswer)}, {chat_id: chatId, message_id: msg.message.message_id})
+			.then(() => {
+				return bot.sendPhoto(chatId, 'image/1.jpg');
+			})
+			.then(() => {
+				switch(data) {
+					case '5': 
+					reply = 'Именно так! Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
 					break;
-				case '3':
-					reply = 'Ну уж нет, «идеальный» Перси был идеален во всём, в том числе на СОВ. 11 «Превосходно» и 1 «Выше ожидаемого» (по Защите от Тёмных Искусств) получила Гермиона';
-					break;
-				case '4':
-					reply = 'Вообще-то тёмные маги тоже отлично учатся!) Иногда набирают 12 «Превосходно». А вот Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
-					break;
-				default:
-					reply = '';
-			}
-			return bot.sendMessage(chatId, reply, continueOptions[0]);
-		})
-	}
+					case '6':
+						reply = 'Несмотря на свою отвязную внешность, Билл был старостой школы и отличным студентом, набравшим 12 «Превосходно» на СОВ. А вот Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
+						break;
+					case '7':
+						reply = 'Ну уж нет, «идеальный» Перси был идеален во всём, в том числе на СОВ. 11 «Превосходно» и 1 «Выше ожидаемого» (по Защите от Тёмных Искусств) получила Гермиона';
+						break;
+					case '8':
+						reply = 'Вообще-то тёмные маги тоже отлично учатся!) Иногда набирают 12 «Превосходно». А вот Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
+						break;
+					default:
+						reply = '';
+				}
+				return bot.sendMessage(chatId, reply, continueOptions[1]);
+			})
+		}
+	});
 }
 
 const continueOptions = [
@@ -152,17 +153,6 @@ const continueOptions = [
 	},
 ]
 
-const question2Options = {
-	reply_markup: JSON.stringify({
-		inline_keyboard: [
-			[{text: 'Гарри', callback_data: '5'}],
-			[{text: 'Билл', callback_data: '6'}],
-			[{text: 'Перси', callback_data: '7'}],
-			[{text: 'Барти', callback_data: '8'}],
-		]
-	})
-};
-
 const start = () => {
 	bot.setMyCommands([
 		{command: '/start', description: 'Начальное приветствие'},
@@ -196,10 +186,8 @@ const start = () => {
 		firstQuestion(msg);
 		switch(msg.data) {
 			case 'question2':
-				secondQuestion(msg);
+				secondQuestion(chatId);
 				break;
-			case 'question3':
-				return bot.sendMessage(chatId, 'Третий вопрос');
 		}
 	});
 };

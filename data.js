@@ -8,5 +8,16 @@ module.exports = {
 				[{text: 'Барти Крауч младший', callback_data: '4'}],
 			],
 		}),
-	}
+	},
+
+	question2Options: {
+		reply_markup: JSON.stringify({
+			inline_keyboard: [
+				[{text: 'Гарри', callback_data: '5'}],
+				[{text: 'Билл', callback_data: '6'}],
+				[{text: 'Перси', callback_data: '7'}],
+				[{text: 'Барти', callback_data: '8'}],
+			]
+		})
+	},
 }
