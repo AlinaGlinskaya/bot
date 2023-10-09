@@ -4,7 +4,20 @@ const token ='6173423791:AAEg-GTufUbz8tTrallnBsX0Mt3zsX5dc9w';
 
 const bot = new TelegramApi(token, {polling: true});
 
-const {question1Options, question2Options} = require('./data');
+const {
+	question1Options, 
+	question2Options, 
+	question3Options, 
+	question4Options, 
+	question5Options, 
+	question6Options, 
+	question7Options,
+	question8Options,
+	question9Options, 
+	question10Options,
+	answers} = require('./data');
+
+	let result = 0;
 
 const generateInlineKeyboard = (options, data, rightAnswer) => {
 	const keyboard = JSON.parse(options.reply_markup).inline_keyboard;
@@ -25,6 +38,9 @@ const firstQuestion = (msg) => {
 	const data = msg.data;
 	const chatId = msg.message.chat.id;
 	let reply = '';
+	if (data === '1') {
+		result++;
+	}
 	if (data >= 1 && data <= 4) {
 		const rightAnswer = '1';
 		bot.editMessageReplyMarkup({inline_keyboard: generateInlineKeyboard(question1Options, data, rightAnswer)}, {chat_id: chatId, message_id: msg.message.message_id})
@@ -34,16 +50,16 @@ const firstQuestion = (msg) => {
 		.then(() => {
 			switch(data) {
 				case '1': 
-				reply = 'Именно так! Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
+				reply = answers.question1[1];
 				break;
 				case '2':
-					reply = 'Несмотря на свою отвязную внешность, Билл был старостой школы и отличным студентом, набравшим 12 «Превосходно» на СОВ. А вот Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
+					reply = answers.question1[2];
 					break;
 				case '3':
-					reply = 'Ну уж нет, «идеальный» Перси был идеален во всём, в том числе на СОВ. 11 «Превосходно» и 1 «Выше ожидаемого» (по Защите от Тёмных Искусств) получила Гермиона';
+					reply = answers.question1[3];
 					break;
 				case '4':
-					reply = 'Вообще-то тёмные маги тоже отлично учатся!) Иногда набирают 12 «Превосходно». А вот Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
+					reply = answers.question1[4];
 					break;
 				default:
 					reply = '';
@@ -54,29 +70,32 @@ const firstQuestion = (msg) => {
 };
 
 const secondQuestion = (chatId) => {
-	bot.sendMessage(chatId, 'Второй вопрос', question2Options);
+	bot.sendMessage(chatId, 'Вопрос 2 из 10. Что пообещали близнецы Уизли, сбегая из Хогвартса?', question2Options);
 	let reply = '';
 	bot.on('callback_query', msg => {
 		const data = msg.data;
+		if (data === '7') {
+			result++;
+		}
 		if (data >= 5 && data <= 8) {
-			const rightAnswer = '6';
+			const rightAnswer = '7';
 			bot.editMessageReplyMarkup({inline_keyboard: generateInlineKeyboard(question2Options, data, rightAnswer)}, {chat_id: chatId, message_id: msg.message.message_id})
 			.then(() => {
-				return bot.sendPhoto(chatId, 'image/1.jpg');
+				return bot.sendPhoto(chatId, 'image/2.jpg');
 			})
 			.then(() => {
 				switch(data) {
 					case '5': 
-					reply = 'Именно так! Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
+					reply = answers.question2[1];
 					break;
 					case '6':
-						reply = 'Несмотря на свою отвязную внешность, Билл был старостой школы и отличным студентом, набравшим 12 «Превосходно» на СОВ. А вот Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
+						reply = answers.question2[2];
 						break;
 					case '7':
-						reply = 'Ну уж нет, «идеальный» Перси был идеален во всём, в том числе на СОВ. 11 «Превосходно» и 1 «Выше ожидаемого» (по Защите от Тёмных Искусств) получила Гермиона';
+						reply = answers.question2[3];
 						break;
 					case '8':
-						reply = 'Вообще-то тёмные маги тоже отлично учатся!) Иногда набирают 12 «Превосходно». А вот Гермиона получила 11 оценок «Превосходно» и одну «Выше ожидаемого» — по Защите от Тёмных Искусств';
+						reply = answers.question2[4];
 						break;
 					default:
 						reply = '';
@@ -85,7 +104,323 @@ const secondQuestion = (chatId) => {
 			})
 		}
 	});
+};
+
+const thirdQuestion = (chatId) => {
+	bot.sendMessage(chatId, 'Вопрос 3 из 10. Какой Патронус у Чжоу Чанг?', question3Options);
+	let reply = '';
+	bot.on('callback_query', msg => {
+		const data = msg.data;
+		if (data === '12') {
+			result++;
+		}
+		if (data >= 9 && data <= 12) {
+			const rightAnswer = '12';
+			bot.editMessageReplyMarkup({inline_keyboard: generateInlineKeyboard(question3Options, data, rightAnswer)}, {chat_id: chatId, message_id: msg.message.message_id})
+			.then(() => {
+				return bot.sendPhoto(chatId, 'image/3.jpg');
+			})
+			.then(() => {
+				switch(data) {
+					case '9': 
+					reply = answers.question3[1];
+					break;
+					case '10':
+						reply = answers.question3[2];
+						break;
+					case '11':
+						reply = answers.question3[3];
+						break;
+					case '12':
+						reply = answers.question3[4];
+						break;
+					default:
+						reply = '';
+				}
+				return bot.sendMessage(chatId, reply, continueOptions[2]);
+			})
+		}
+	});
+};
+
+const fourthQuestion = (chatId) => {
+	bot.sendMessage(chatId, 'Вопрос 4 из 10. Кого из этих персонажей не пытали Круциатусом?', question4Options);
+	let reply = '';
+	bot.on('callback_query', msg => {
+		const data = msg.data;
+		if (data === '16') {
+			result++;
+		}
+		if (data >= 13 && data <= 16) {
+			const rightAnswer = '16';
+			bot.editMessageReplyMarkup({inline_keyboard: generateInlineKeyboard(question4Options, data, rightAnswer)}, {chat_id: chatId, message_id: msg.message.message_id})
+			.then(() => {
+				return bot.sendPhoto(chatId, 'image/4.jpg');
+			})
+			.then(() => {
+				switch(data) {
+					case '13': 
+					reply = answers.question4[1];
+					break;
+					case '14':
+						reply = answers.question4[2];
+						break;
+					case '15':
+						reply = answers.question4[3];
+						break;
+					case '16':
+						reply = answers.question4[4];
+						break;
+					default:
+						reply = '';
+				}
+				return bot.sendMessage(chatId, reply, continueOptions[3]);
+			})
+		}
+	});
 }
+
+const fifthQuestion = (chatId) => {
+	bot.sendMessage(chatId, 'Вопрос 5 из 10. Что из этого не входит в состав Оборотного зелья?', question5Options);
+	let reply = '';
+	bot.on('callback_query', msg => {
+		const data = msg.data;
+		if (data === '18') {
+			result++;
+		}
+		if (data >= 17 && data <= 20) {
+			const rightAnswer = '18';
+			bot.editMessageReplyMarkup({inline_keyboard: generateInlineKeyboard(question5Options, data, rightAnswer)}, {chat_id: chatId, message_id: msg.message.message_id})
+			.then(() => {
+				return bot.sendPhoto(chatId, 'image/5.jpg');
+			})
+			.then(() => {
+				switch(data) {
+					case '17': 
+					reply = answers.question5[1];
+					break;
+					case '18':
+						reply = answers.question5[2];
+						break;
+					case '19':
+						reply = answers.question5[3];
+						break;
+					case '20':
+						reply = answers.question5[4];
+						break;
+					default:
+						reply = '';
+				}
+				return bot.sendMessage(chatId, reply, continueOptions[4]);
+			})
+		}
+	});
+}
+
+const sixthQuestion = (chatId) => {
+	bot.sendMessage(chatId, 'Вопрос 6 из 10. Кто из этих персонажей не был игроком в квиддич?', question6Options);
+	let reply = '';
+	bot.on('callback_query', msg => {
+		const data = msg.data;
+		if (data === '21') {
+			result++;
+		}
+		if (data >= 21 && data <= 24) {
+			const rightAnswer = '21';
+			bot.editMessageReplyMarkup({inline_keyboard: generateInlineKeyboard(question6Options, data, rightAnswer)}, {chat_id: chatId, message_id: msg.message.message_id})
+			.then(() => {
+				return bot.sendPhoto(chatId, 'image/6.jpg');
+			})
+			.then(() => {
+				switch(data) {
+					case '21': 
+					reply = answers.question6[1];
+					break;
+					case '22':
+						reply = answers.question6[2];
+						break;
+					case '23':
+						reply = answers.question6[3];
+						break;
+					case '24':
+						reply = answers.question6[4];
+						break;
+					default:
+						reply = '';
+				}
+				return bot.sendMessage(chatId, reply, continueOptions[5]);
+			})
+		}
+	});
+}
+
+const sevenQuestion = (chatId) => {
+	bot.sendMessage(chatId, 'Вопрос 7 из 10. Как звали брата и сестру Дамблдора?', question7Options);
+	let reply = '';
+	bot.on('callback_query', msg => {
+		const data = msg.data;
+		if (data === '27') {
+			result++;
+		}
+		if (data >= 25 && data <= 28) {
+			const rightAnswer = '27';
+			bot.editMessageReplyMarkup({inline_keyboard: generateInlineKeyboard(question7Options, data, rightAnswer)}, {chat_id: chatId, message_id: msg.message.message_id})
+			.then(() => {
+				return bot.sendPhoto(chatId, 'image/7.jpg');
+			})
+			.then(() => {
+				switch(data) {
+					case '25': 
+					reply = answers.question7[1];
+					break;
+					case '26':
+						reply = answers.question7[2];
+						break;
+					case '27':
+						reply = answers.question7[3];
+						break;
+					case '28':
+						reply = answers.question7[4];
+						break;
+					default:
+						reply = '';
+				}
+				return bot.sendMessage(chatId, reply, continueOptions[6]);
+			})
+		}
+	});
+}
+
+const eightQuestion = (chatId) => {
+	bot.sendMessage(chatId, 'Вопрос 8 из 10. Когда семеро Поттеров поднялись в ночное небо и отправились в «Нору», как Пожиратели Смерти узнали, какой из Поттеров — настоящий?', question8Options);
+	let reply = '';
+	bot.on('callback_query', msg => {
+		const data = msg.data;
+		if (data === '31') {
+			result++;
+		}
+		if (data >= 29 && data <= 32) {
+			const rightAnswer = '31';
+			bot.editMessageReplyMarkup({inline_keyboard: generateInlineKeyboard(question8Options, data, rightAnswer)}, {chat_id: chatId, message_id: msg.message.message_id})
+			.then(() => {
+				return bot.sendPhoto(chatId, 'image/8.webp');
+			})
+			.then(() => {
+				switch(data) {
+					case '29': 
+					reply = answers.question8[1];
+					break;
+					case '30':
+						reply = answers.question8[2];
+						break;
+					case '31':
+						reply = answers.question8[3];
+						break;
+					case '32':
+						reply = answers.question8[4];
+						break;
+					default:
+						reply = '';
+				}
+				return bot.sendMessage(chatId, reply, continueOptions[7]);
+			})
+		}
+	});
+}
+
+const nineQuestion = (chatId) => {
+	bot.sendMessage(chatId, 'Вопрос 9 из 10. Торт в форме чего испекла миссис Уизли для Гарри в честь его совершеннолетия?', question9Options);
+	let reply = '';
+	bot.on('callback_query', msg => {
+		const data = msg.data;
+		if (data === '33') {
+			result++;
+		}
+		if (data >= 33 && data <= 36) {
+			const rightAnswer = '33';
+			bot.editMessageReplyMarkup({inline_keyboard: generateInlineKeyboard(question9Options, data, rightAnswer)}, {chat_id: chatId, message_id: msg.message.message_id})
+			.then(() => {
+				return bot.sendPhoto(chatId, 'image/9.webp');
+			})
+			.then(() => {
+				switch(data) {
+					case '33': 
+					reply = answers.question9[1];
+					break;
+					case '34':
+						reply = answers.question9[2];
+						break;
+					case '35':
+						reply = answers.question9[3];
+						break;
+					case '36':
+						reply = answers.question9[4];
+						break;
+					default:
+						reply = '';
+				}
+				return bot.sendMessage(chatId, reply, continueOptions[8]);
+			})
+		}
+	});
+}
+
+const tenQuestion = (chatId) => {
+	bot.sendMessage(chatId, 'Вопрос 10 из 10. Кто из этих персонажей никогда не уничтожал крестраж?', question10Options);
+	let reply = '';
+	bot.on('callback_query', msg => {
+		const data = msg.data;
+		if (data === '38') {
+			result++;
+		}
+		if (data >= 37 && data <= 40) {
+			const rightAnswer = '38';
+			bot.editMessageReplyMarkup({inline_keyboard: generateInlineKeyboard(question10Options, data, rightAnswer)}, {chat_id: chatId, message_id: msg.message.message_id})
+			.then(() => {
+				return bot.sendPhoto(chatId, 'image/10.jpg');
+			})
+			.then(() => {
+				switch(data) {
+					case '37': 
+					reply = answers.question10[1];
+					break;
+					case '38':
+						reply = answers.question10[2];
+						break;
+					case '39':
+						reply = answers.question10[3];
+						break;
+					case '40':
+						reply = answers.question10[4];
+						break;
+					default:
+						reply = '';
+				}
+				return bot.sendMessage(chatId, reply, continueOptions[9]);
+			})
+		}
+	});
+}
+
+const calculateResult = (chatId) => {
+	bot.sendMessage(chatId, `Ваш результат: ${result} из 10`);
+	if (result <= 3) {
+		bot.sendMessage(chatId, 'Атата. Кажется, ты совсем забыл о мире Гарри, или вовсе не читал книг. Это нужно срочно исправить!');
+		return bot.sendPhoto(chatId, 'https://tlgrm.ru/_/stickers/bc6/72e/bc672eba-cdc5-4458-99ce-cd14094e6257/12.jpg');
+	}
+	if (result > 3 && result <= 6) {
+		bot.sendMessage(chatId, 'Хороший результат! Вот тебе Гарри-милаш');
+		return bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/b69/f11/b69f1114-f754-4386-9d98-093841e9d4bb/1.jpg');
+	}
+	if (result > 6 && result <= 9) {
+		bot.sendMessage(chatId, 'Отлично! Ты великолепна как Гермиона Грейнджер (книжная!). Вот тебе за это Эмма Уотсон');
+		return bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/388/83a/38883a01-9caa-4a91-8a50-cf1ae9a7cfa7/6.jpg');
+	}
+	if (result === 10) {
+		bot.sendMessage(chatId, 'Вау!!!! 100 баллов Гриффиндору!!! Ты великолепен!');
+		return bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/b69/f11/b69f1114-f754-4386-9d98-093841e9d4bb/8.webp');
+	}
+};
 
 const continueOptions = [
 	{
@@ -151,6 +486,13 @@ const continueOptions = [
 			]
 		})
 	},
+	{
+		reply_markup: JSON.stringify({
+			inline_keyboard: [
+				[{text: 'Узнать результат', callback_data: `finish`}],
+			]
+		})
+	},
 ]
 
 const start = () => {
@@ -175,6 +517,7 @@ const start = () => {
 
 		if (text === '/game') {
 			await bot.sendMessage(chatId, 'Погнали!');
+			result = 0;
 			return bot.sendMessage(chatId, 'Вопрос 1 из 10. Кто из этих персонажей не получил высшие баллы по всем 12 предметам на СОВ?', question1Options);
 		}
 
@@ -187,6 +530,33 @@ const start = () => {
 		switch(msg.data) {
 			case 'question2':
 				secondQuestion(chatId);
+				break;
+			case 'question3':
+				thirdQuestion(chatId);
+				break;
+			case 'question4':
+				fourthQuestion(chatId);
+				break;
+			case 'question5':
+				fifthQuestion(chatId);
+				break;
+			case 'question6':
+				sixthQuestion(chatId);
+				break;
+			case 'question7':
+				sevenQuestion(chatId);
+				break;
+			case 'question8':
+				eightQuestion(chatId);
+				break;
+			case 'question9':
+				nineQuestion(chatId);
+				break;
+			case 'question10':
+				tenQuestion(chatId);
+				break;
+			case 'finish':
+				calculateResult(chatId);
 				break;
 		}
 	});
