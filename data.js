@@ -170,5 +170,78 @@ module.exports = {
 			'3': 'Нет, Невилл убил Нагайну мечом Годрика Гриффиндора. А вот Регулус не смог уничтожить медальон, и завещал это Кикимеру',
 			'4': 'Дамблдор уничтожил кольцо Марволо. А вот Регулус не смог уничтожить медальон, и завещал это Кикимеру'
 		}
+	},
+
+	continueOptions: {
+		'1': {
+			reply_markup: JSON.stringify({
+				inline_keyboard: [
+					[{text: 'Следующий вопрос', callback_data: `question2`}],
+				]
+			})
+		},
+		'2': {
+			reply_markup: JSON.stringify({
+				inline_keyboard: [
+					[{text: 'Следующий вопрос', callback_data: `question3`}],
+				]
+			})
+		},
+		'3': {
+			reply_markup: JSON.stringify({
+				inline_keyboard: [
+					[{text: 'Следующий вопрос', callback_data: `question4`}],
+				]
+			})
+		},
+		'4': {
+			reply_markup: JSON.stringify({
+				inline_keyboard: [
+					[{text: 'Следующий вопрос', callback_data: `question5`}],
+				]
+			})
+		},
+		'5': {
+			reply_markup: JSON.stringify({
+				inline_keyboard: [
+					[{text: 'Следующий вопрос', callback_data: `question6`}],
+				]
+			})
+		},
+		'6': {
+			reply_markup: JSON.stringify({
+				inline_keyboard: [
+					[{text: 'Следующий вопрос', callback_data: `question7`}],
+				]
+			})
+		},
+		'7': {
+			reply_markup: JSON.stringify({
+				inline_keyboard: [
+					[{text: 'Следующий вопрос', callback_data: `question8`}],
+				]
+			})
+		},
+		'8': {
+			reply_markup: JSON.stringify({
+				inline_keyboard: [
+					[{text: 'Следующий вопрос', callback_data: `question9`}],
+				]
+			})
+		},
+		'9': {
+			reply_markup: JSON.stringify({
+				inline_keyboard: [
+					[{text: 'Следующий вопрос', callback_data: `question10`}],
+				]
+			})
+		},
+		'10': {
+			reply_markup: JSON.stringify({
+				inline_keyboard: [
+					[{text: 'Узнать результат', callback_data: `finish`}],
+				]
+			})
+		},
 	}
 }

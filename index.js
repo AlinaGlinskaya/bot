@@ -15,6 +15,7 @@ const {
 	question8Options,
 	question9Options, 
 	question10Options,
+	continueOptions,
 	answers} = require('./data');
 
 	let result = 0;
@@ -64,7 +65,7 @@ const firstQuestion = (msg) => {
 				default:
 					reply = '';
 			}
-			return bot.sendMessage(chatId, reply, continueOptions[0]);
+			return bot.sendMessage(chatId, reply, continueOptions['1']);
 		})
 	}
 };
@@ -100,7 +101,7 @@ const secondQuestion = (chatId) => {
 					default:
 						reply = '';
 				}
-				return bot.sendMessage(chatId, reply, continueOptions[1]);
+				return bot.sendMessage(chatId, reply, continueOptions['2']);
 			})
 		}
 	});
@@ -137,7 +138,7 @@ const thirdQuestion = (chatId) => {
 					default:
 						reply = '';
 				}
-				return bot.sendMessage(chatId, reply, continueOptions[2]);
+				return bot.sendMessage(chatId, reply, continueOptions['3']);
 			})
 		}
 	});
@@ -174,7 +175,7 @@ const fourthQuestion = (chatId) => {
 					default:
 						reply = '';
 				}
-				return bot.sendMessage(chatId, reply, continueOptions[3]);
+				return bot.sendMessage(chatId, reply, continueOptions['4']);
 			})
 		}
 	});
@@ -211,7 +212,7 @@ const fifthQuestion = (chatId) => {
 					default:
 						reply = '';
 				}
-				return bot.sendMessage(chatId, reply, continueOptions[4]);
+				return bot.sendMessage(chatId, reply, continueOptions['5']);
 			})
 		}
 	});
@@ -248,7 +249,7 @@ const sixthQuestion = (chatId) => {
 					default:
 						reply = '';
 				}
-				return bot.sendMessage(chatId, reply, continueOptions[5]);
+				return bot.sendMessage(chatId, reply, continueOptions['6']);
 			})
 		}
 	});
@@ -285,7 +286,7 @@ const sevenQuestion = (chatId) => {
 					default:
 						reply = '';
 				}
-				return bot.sendMessage(chatId, reply, continueOptions[6]);
+				return bot.sendMessage(chatId, reply, continueOptions['7']);
 			})
 		}
 	});
@@ -322,7 +323,7 @@ const eightQuestion = (chatId) => {
 					default:
 						reply = '';
 				}
-				return bot.sendMessage(chatId, reply, continueOptions[7]);
+				return bot.sendMessage(chatId, reply, continueOptions['8']);
 			})
 		}
 	});
@@ -359,7 +360,7 @@ const nineQuestion = (chatId) => {
 					default:
 						reply = '';
 				}
-				return bot.sendMessage(chatId, reply, continueOptions[8]);
+				return bot.sendMessage(chatId, reply, continueOptions['9']);
 			})
 		}
 	});
@@ -396,7 +397,7 @@ const tenQuestion = (chatId) => {
 					default:
 						reply = '';
 				}
-				return bot.sendMessage(chatId, reply, continueOptions[9]);
+				return bot.sendMessage(chatId, reply, continueOptions['10']);
 			})
 		}
 	});
@@ -421,79 +422,6 @@ const calculateResult = (chatId) => {
 		return bot.sendSticker(chatId, './image/final4.webp');
 	}
 };
-
-const continueOptions = [
-	{
-		reply_markup: JSON.stringify({
-			inline_keyboard: [
-				[{text: 'Следующий вопрос', callback_data: `question2`}],
-			]
-		})
-	},
-	{
-		reply_markup: JSON.stringify({
-			inline_keyboard: [
-				[{text: 'Следующий вопрос', callback_data: `question3`}],
-			]
-		})
-	},
-	{
-		reply_markup: JSON.stringify({
-			inline_keyboard: [
-				[{text: 'Следующий вопрос', callback_data: `question4`}],
-			]
-		})
-	},
-	{
-		reply_markup: JSON.stringify({
-			inline_keyboard: [
-				[{text: 'Следующий вопрос', callback_data: `question5`}],
-			]
-		})
-	},
-	{
-		reply_markup: JSON.stringify({
-			inline_keyboard: [
-				[{text: 'Следующий вопрос', callback_data: `question6`}],
-			]
-		})
-	},
-	{
-		reply_markup: JSON.stringify({
-			inline_keyboard: [
-				[{text: 'Следующий вопрос', callback_data: `question7`}],
-			]
-		})
-	},
-	{
-		reply_markup: JSON.stringify({
-			inline_keyboard: [
-				[{text: 'Следующий вопрос', callback_data: `question8`}],
-			]
-		})
-	},
-	{
-		reply_markup: JSON.stringify({
-			inline_keyboard: [
-				[{text: 'Следующий вопрос', callback_data: `question9`}],
-			]
-		})
-	},
-	{
-		reply_markup: JSON.stringify({
-			inline_keyboard: [
-				[{text: 'Следующий вопрос', callback_data: `question10`}],
-			]
-		})
-	},
-	{
-		reply_markup: JSON.stringify({
-			inline_keyboard: [
-				[{text: 'Узнать результат', callback_data: `finish`}],
-			]
-		})
-	},
-]
 
 const start = () => {
 	bot.setMyCommands([
