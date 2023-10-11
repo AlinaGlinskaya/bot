@@ -18,6 +18,7 @@ const {
 	continueOptions,
 	testQuestions,
 	images,
+	ranges,
 	answers } = require('./data');
 
 let result = 0;
@@ -37,13 +38,56 @@ const generateInlineKeyboard = (options, data, rightAnswer) => {
 	return keyboard;
 };
 
+const generateQuestion = (
+	first,
+	rightAnswer,
+	questionOptions,
+	image,
+	questionNumber
+	) => {
+	if (first) {
+		result = 0;
+	}
+	let reply = '';
+	bot.on('callback_query', msg => {
+		const data = msg.data;
+		if (data === rightAnswer) {
+			result++;
+		}
+		if (data !== 'finished') {
+			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(questionOptions, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
+				.then(() => {
+					return bot.sendPhoto(chatId, image);
+				})
+				.then(() => {
+					switch (data) {
+						case ranges[questionNumber][0]:
+							reply = answers[questionNumber][1];
+							break;
+						case ranges[questionNumber][1]:
+							reply = answers[questionNumber][2];
+							break;
+						case ranges[questionNumber][2]:
+							reply = answers[questionNumber][3];
+							break;
+						case ranges[questionNumber][3]:
+							reply = answers[questionNumber][4];
+							break;
+						default:
+							reply = '';
+					}
+					return bot.sendMessage(chatId, reply, continueOptions[number]);
+				})
+		}
+	})
+}
+
 const firstQuestion = (chatId) => {
 	result = 0;
 	bot.sendMessage(chatId, testQuestions['1'], question1Options);
 	let reply = '';
 	bot.on('callback_query', msg => {
 		const data = msg.data;
-		const chatId = msg.message.chat.id;
 		if (data === '1') {
 			result++;
 		}
@@ -56,16 +100,16 @@ const firstQuestion = (chatId) => {
 				.then(() => {
 					switch (data) {
 						case '1':
-							reply = answers.question1[1];
+							reply = answers[1][1];
 							break;
 						case '2':
-							reply = answers.question1[2];
+							reply = answers[1][2];
 							break;
 						case '3':
-							reply = answers.question1[3];
+							reply = answers[1][3];
 							break;
 						case '4':
-							reply = answers.question1[4];
+							reply = answers[1][4];
 							break;
 						default:
 							reply = '';
@@ -93,16 +137,16 @@ const secondQuestion = (chatId) => {
 				.then(() => {
 					switch (data) {
 						case '5':
-							reply = answers.question2[1];
+							reply = answers[2][1];
 							break;
 						case '6':
-							reply = answers.question2[2];
+							reply = answers[2][2];
 							break;
 						case '7':
-							reply = answers.question2[3];
+							reply = answers[2][3];
 							break;
 						case '8':
-							reply = answers.question2[4];
+							reply = answers[2][4];
 							break;
 						default:
 							reply = '';
@@ -130,16 +174,16 @@ const thirdQuestion = (chatId) => {
 				.then(() => {
 					switch (data) {
 						case '9':
-							reply = answers.question3[1];
+							reply = answers[3][1];
 							break;
 						case '10':
-							reply = answers.question3[2];
+							reply = answers[3][2];
 							break;
 						case '11':
-							reply = answers.question3[3];
+							reply = answers[3][3];
 							break;
 						case '12':
-							reply = answers.question3[4];
+							reply = answers[3][4];
 							break;
 						default:
 							reply = '';
@@ -167,16 +211,16 @@ const fourthQuestion = (chatId) => {
 				.then(() => {
 					switch (data) {
 						case '13':
-							reply = answers.question4[1];
+							reply = answers[4][1];
 							break;
 						case '14':
-							reply = answers.question4[2];
+							reply = answers[4][2];
 							break;
 						case '15':
-							reply = answers.question4[3];
+							reply = answers[4][3];
 							break;
 						case '16':
-							reply = answers.question4[4];
+							reply = answers[4][4];
 							break;
 						default:
 							reply = '';
@@ -204,16 +248,16 @@ const fifthQuestion = (chatId) => {
 				.then(() => {
 					switch (data) {
 						case '17':
-							reply = answers.question5[1];
+							reply = answers[5][1];
 							break;
 						case '18':
-							reply = answers.question5[2];
+							reply = answers[5][2];
 							break;
 						case '19':
-							reply = answers.question5[3];
+							reply = answers[5][3];
 							break;
 						case '20':
-							reply = answers.question5[4];
+							reply = answers[5][4];
 							break;
 						default:
 							reply = '';
@@ -241,16 +285,16 @@ const sixthQuestion = (chatId) => {
 				.then(() => {
 					switch (data) {
 						case '21':
-							reply = answers.question6[1];
+							reply = answers[6][1];
 							break;
 						case '22':
-							reply = answers.question6[2];
+							reply = answers[6][2];
 							break;
 						case '23':
-							reply = answers.question6[3];
+							reply = answers[6][3];
 							break;
 						case '24':
-							reply = answers.question6[4];
+							reply = answers[6][4];
 							break;
 						default:
 							reply = '';
@@ -278,16 +322,16 @@ const sevenQuestion = (chatId) => {
 				.then(() => {
 					switch (data) {
 						case '25':
-							reply = answers.question7[1];
+							reply = answers[7][1];
 							break;
 						case '26':
-							reply = answers.question7[2];
+							reply = answers[7][2];
 							break;
 						case '27':
-							reply = answers.question7[3];
+							reply = answers[7][3];
 							break;
 						case '28':
-							reply = answers.question7[4];
+							reply = answers[7][4];
 							break;
 						default:
 							reply = '';
@@ -315,16 +359,16 @@ const eightQuestion = (chatId) => {
 				.then(() => {
 					switch (data) {
 						case '29':
-							reply = answers.question8[1];
+							reply = answers[8][1];
 							break;
 						case '30':
-							reply = answers.question8[2];
+							reply = answers[8][2];
 							break;
 						case '31':
-							reply = answers.question8[3];
+							reply = answers[8][3];
 							break;
 						case '32':
-							reply = answers.question8[4];
+							reply = answers[8][4];
 							break;
 						default:
 							reply = '';
@@ -352,16 +396,16 @@ const nineQuestion = (chatId) => {
 				.then(() => {
 					switch (data) {
 						case '33':
-							reply = answers.question9[1];
+							reply = answers[9][1];
 							break;
 						case '34':
-							reply = answers.question9[2];
+							reply = answers[9][2];
 							break;
 						case '35':
-							reply = answers.question9[3];
+							reply = answers[9][3];
 							break;
 						case '36':
-							reply = answers.question9[4];
+							reply = answers[9][4];
 							break;
 						default:
 							reply = '';
@@ -389,16 +433,16 @@ const tenQuestion = (chatId) => {
 				.then(() => {
 					switch (data) {
 						case '37':
-							reply = answers.question10[1];
+							reply = answers[10][1];
 							break;
 						case '38':
-							reply = answers.question10[2];
+							reply = answers[10][2];
 							break;
 						case '39':
-							reply = answers.question10[3];
+							reply = answers[10][3];
 							break;
 						case '40':
-							reply = answers.question10[4];
+							reply = answers[10][4];
 							break;
 						default:
 							reply = '';
