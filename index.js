@@ -16,6 +16,8 @@ const {
 	question9Options,
 	question10Options,
 	continueOptions,
+	testQuestions,
+	images,
 	answers } = require('./data');
 
 let result = 0;
@@ -37,7 +39,7 @@ const generateInlineKeyboard = (options, data, rightAnswer) => {
 
 const firstQuestion = (chatId) => {
 	result = 0;
-	bot.sendMessage(chatId, 'Вопрос 1 из 10. Кто из этих персонажей не получил высшие баллы по всем 12 предметам на СОВ?', question1Options);
+	bot.sendMessage(chatId, testQuestions['1'], question1Options);
 	let reply = '';
 	bot.on('callback_query', msg => {
 		const data = msg.data;
@@ -49,7 +51,7 @@ const firstQuestion = (chatId) => {
 			const rightAnswer = '1';
 			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question1Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
 				.then(() => {
-					return bot.sendPhoto(chatId, 'image/1.jpg');
+					return bot.sendPhoto(chatId, images['1']);
 				})
 				.then(() => {
 					switch (data) {
@@ -75,7 +77,7 @@ const firstQuestion = (chatId) => {
 };
 
 const secondQuestion = (chatId) => {
-	bot.sendMessage(chatId, 'Вопрос 2 из 10. Что пообещали близнецы Уизли, сбегая из Хогвартса?', question2Options);
+	bot.sendMessage(chatId, testQuestions['2'], question2Options);
 	let reply = '';
 	bot.on('callback_query', msg => {
 		const data = msg.data;
@@ -86,7 +88,7 @@ const secondQuestion = (chatId) => {
 			const rightAnswer = '7';
 			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question2Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
 				.then(() => {
-					return bot.sendPhoto(chatId, 'image/2.jpg');
+					return bot.sendPhoto(chatId, images['2']);
 				})
 				.then(() => {
 					switch (data) {
@@ -112,7 +114,7 @@ const secondQuestion = (chatId) => {
 };
 
 const thirdQuestion = (chatId) => {
-	bot.sendMessage(chatId, 'Вопрос 3 из 10. Какой Патронус у Чжоу Чанг?', question3Options);
+	bot.sendMessage(chatId, testQuestions['3'], question3Options);
 	let reply = '';
 	bot.on('callback_query', msg => {
 		const data = msg.data;
@@ -123,7 +125,7 @@ const thirdQuestion = (chatId) => {
 			const rightAnswer = '12';
 			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question3Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
 				.then(() => {
-					return bot.sendPhoto(chatId, 'image/3.jpg');
+					return bot.sendPhoto(chatId, images['3']);
 				})
 				.then(() => {
 					switch (data) {
@@ -149,7 +151,7 @@ const thirdQuestion = (chatId) => {
 };
 
 const fourthQuestion = (chatId) => {
-	bot.sendMessage(chatId, 'Вопрос 4 из 10. Кого из этих персонажей не пытали Круциатусом?', question4Options);
+	bot.sendMessage(chatId, testQuestions['4'], question4Options);
 	let reply = '';
 	bot.on('callback_query', msg => {
 		const data = msg.data;
@@ -160,7 +162,7 @@ const fourthQuestion = (chatId) => {
 			const rightAnswer = '16';
 			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question4Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
 				.then(() => {
-					return bot.sendPhoto(chatId, 'image/4.jpg');
+					return bot.sendPhoto(chatId, images['4']);
 				})
 				.then(() => {
 					switch (data) {
@@ -186,7 +188,7 @@ const fourthQuestion = (chatId) => {
 }
 
 const fifthQuestion = (chatId) => {
-	bot.sendMessage(chatId, 'Вопрос 5 из 10. Что из этого не входит в состав Оборотного зелья?', question5Options);
+	bot.sendMessage(chatId, testQuestions['5'], question5Options);
 	let reply = '';
 	bot.on('callback_query', msg => {
 		const data = msg.data;
@@ -197,7 +199,7 @@ const fifthQuestion = (chatId) => {
 			const rightAnswer = '18';
 			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question5Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
 				.then(() => {
-					return bot.sendPhoto(chatId, 'image/5.jpg');
+					return bot.sendPhoto(chatId, images['5']);
 				})
 				.then(() => {
 					switch (data) {
@@ -223,7 +225,7 @@ const fifthQuestion = (chatId) => {
 }
 
 const sixthQuestion = (chatId) => {
-	bot.sendMessage(chatId, 'Вопрос 6 из 10. Кто из этих персонажей не был игроком в квиддич?', question6Options);
+	bot.sendMessage(chatId, testQuestions['6'], question6Options);
 	let reply = '';
 	bot.on('callback_query', msg => {
 		const data = msg.data;
@@ -234,7 +236,7 @@ const sixthQuestion = (chatId) => {
 			const rightAnswer = '21';
 			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question6Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
 				.then(() => {
-					return bot.sendPhoto(chatId, 'image/6.jpg');
+					return bot.sendPhoto(chatId, images['6']);
 				})
 				.then(() => {
 					switch (data) {
@@ -260,7 +262,7 @@ const sixthQuestion = (chatId) => {
 }
 
 const sevenQuestion = (chatId) => {
-	bot.sendMessage(chatId, 'Вопрос 7 из 10. Как звали брата и сестру Дамблдора?', question7Options);
+	bot.sendMessage(chatId, testQuestions['7'], question7Options);
 	let reply = '';
 	bot.on('callback_query', msg => {
 		const data = msg.data;
@@ -271,7 +273,7 @@ const sevenQuestion = (chatId) => {
 			const rightAnswer = '27';
 			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question7Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
 				.then(() => {
-					return bot.sendPhoto(chatId, 'image/7.jpg');
+					return bot.sendPhoto(chatId, images['7']);
 				})
 				.then(() => {
 					switch (data) {
@@ -297,7 +299,7 @@ const sevenQuestion = (chatId) => {
 }
 
 const eightQuestion = (chatId) => {
-	bot.sendMessage(chatId, 'Вопрос 8 из 10. Когда семеро Поттеров поднялись в ночное небо и отправились в «Нору», как Пожиратели Смерти узнали, какой из Поттеров — настоящий?', question8Options);
+	bot.sendMessage(chatId, testQuestions['8'], question8Options);
 	let reply = '';
 	bot.on('callback_query', msg => {
 		const data = msg.data;
@@ -308,7 +310,7 @@ const eightQuestion = (chatId) => {
 			const rightAnswer = '31';
 			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question8Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
 				.then(() => {
-					return bot.sendPhoto(chatId, 'image/8.webp');
+					return bot.sendPhoto(chatId, images['8']);
 				})
 				.then(() => {
 					switch (data) {
@@ -334,7 +336,7 @@ const eightQuestion = (chatId) => {
 }
 
 const nineQuestion = (chatId) => {
-	bot.sendMessage(chatId, 'Вопрос 9 из 10. Торт в форме чего испекла миссис Уизли для Гарри в честь его совершеннолетия?', question9Options);
+	bot.sendMessage(chatId, testQuestions['9'], question9Options);
 	let reply = '';
 	bot.on('callback_query', msg => {
 		const data = msg.data;
@@ -345,7 +347,7 @@ const nineQuestion = (chatId) => {
 			const rightAnswer = '33';
 			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question9Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
 				.then(() => {
-					return bot.sendPhoto(chatId, 'image/9.webp');
+					return bot.sendPhoto(chatId, images['9']);
 				})
 				.then(() => {
 					switch (data) {
@@ -371,7 +373,7 @@ const nineQuestion = (chatId) => {
 }
 
 const tenQuestion = (chatId) => {
-	bot.sendMessage(chatId, 'Вопрос 10 из 10. Кто из этих персонажей никогда не уничтожал крестраж?', question10Options);
+	bot.sendMessage(chatId, testQuestions['10'], question10Options);
 	let reply = '';
 	bot.on('callback_query', msg => {
 		const data = msg.data;
@@ -382,7 +384,7 @@ const tenQuestion = (chatId) => {
 			const rightAnswer = '38';
 			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question10Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
 				.then(() => {
-					return bot.sendPhoto(chatId, 'image/10.jpg');
+					return bot.sendPhoto(chatId, images['10']);
 				})
 				.then(() => {
 					switch (data) {
