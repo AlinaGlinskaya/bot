@@ -39,6 +39,7 @@ const generateInlineKeyboard = (options, data, rightAnswer) => {
 };
 
 const generateQuestion = (
+	chatId,
 	first,
 	rightAnswer,
 	questionOptions,
@@ -48,13 +49,14 @@ const generateQuestion = (
 	if (first) {
 		result = 0;
 	}
+	bot.sendMessage(chatId, testQuestions[questionNumber], questionOptions);
 	let reply = '';
 	bot.on('callback_query', msg => {
 		const data = msg.data;
 		if (data === rightAnswer) {
 			result++;
 		}
-		if (data !== 'finished') {
+		if (ranges[questionNumber].includes(data)) {
 			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(questionOptions, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
 				.then(() => {
 					return bot.sendPhoto(chatId, image);
@@ -76,381 +78,10 @@ const generateQuestion = (
 						default:
 							reply = '';
 					}
-					return bot.sendMessage(chatId, reply, continueOptions[number]);
+					return bot.sendMessage(chatId, reply, continueOptions[questionNumber]);
 				})
 		}
 	})
-}
-
-const firstQuestion = (chatId) => {
-	result = 0;
-	bot.sendMessage(chatId, testQuestions['1'], question1Options);
-	let reply = '';
-	bot.on('callback_query', msg => {
-		const data = msg.data;
-		if (data === '1') {
-			result++;
-		}
-		if (data >= 1 && data <= 4) {
-			const rightAnswer = '1';
-			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question1Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
-				.then(() => {
-					return bot.sendPhoto(chatId, images['1']);
-				})
-				.then(() => {
-					switch (data) {
-						case '1':
-							reply = answers[1][1];
-							break;
-						case '2':
-							reply = answers[1][2];
-							break;
-						case '3':
-							reply = answers[1][3];
-							break;
-						case '4':
-							reply = answers[1][4];
-							break;
-						default:
-							reply = '';
-					}
-					return bot.sendMessage(chatId, reply, continueOptions['1']);
-				})
-		}
-	})
-};
-
-const secondQuestion = (chatId) => {
-	bot.sendMessage(chatId, testQuestions['2'], question2Options);
-	let reply = '';
-	bot.on('callback_query', msg => {
-		const data = msg.data;
-		if (data === '7') {
-			result++;
-		}
-		if (data >= 5 && data <= 8) {
-			const rightAnswer = '7';
-			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question2Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
-				.then(() => {
-					return bot.sendPhoto(chatId, images['2']);
-				})
-				.then(() => {
-					switch (data) {
-						case '5':
-							reply = answers[2][1];
-							break;
-						case '6':
-							reply = answers[2][2];
-							break;
-						case '7':
-							reply = answers[2][3];
-							break;
-						case '8':
-							reply = answers[2][4];
-							break;
-						default:
-							reply = '';
-					}
-					return bot.sendMessage(chatId, reply, continueOptions['2']);
-				})
-		}
-	});
-};
-
-const thirdQuestion = (chatId) => {
-	bot.sendMessage(chatId, testQuestions['3'], question3Options);
-	let reply = '';
-	bot.on('callback_query', msg => {
-		const data = msg.data;
-		if (data === '12') {
-			result++;
-		}
-		if (data >= 9 && data <= 12) {
-			const rightAnswer = '12';
-			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question3Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
-				.then(() => {
-					return bot.sendPhoto(chatId, images['3']);
-				})
-				.then(() => {
-					switch (data) {
-						case '9':
-							reply = answers[3][1];
-							break;
-						case '10':
-							reply = answers[3][2];
-							break;
-						case '11':
-							reply = answers[3][3];
-							break;
-						case '12':
-							reply = answers[3][4];
-							break;
-						default:
-							reply = '';
-					}
-					return bot.sendMessage(chatId, reply, continueOptions['3']);
-				})
-		}
-	});
-};
-
-const fourthQuestion = (chatId) => {
-	bot.sendMessage(chatId, testQuestions['4'], question4Options);
-	let reply = '';
-	bot.on('callback_query', msg => {
-		const data = msg.data;
-		if (data === '16') {
-			result++;
-		}
-		if (data >= 13 && data <= 16) {
-			const rightAnswer = '16';
-			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question4Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
-				.then(() => {
-					return bot.sendPhoto(chatId, images['4']);
-				})
-				.then(() => {
-					switch (data) {
-						case '13':
-							reply = answers[4][1];
-							break;
-						case '14':
-							reply = answers[4][2];
-							break;
-						case '15':
-							reply = answers[4][3];
-							break;
-						case '16':
-							reply = answers[4][4];
-							break;
-						default:
-							reply = '';
-					}
-					return bot.sendMessage(chatId, reply, continueOptions['4']);
-				})
-		}
-	});
-}
-
-const fifthQuestion = (chatId) => {
-	bot.sendMessage(chatId, testQuestions['5'], question5Options);
-	let reply = '';
-	bot.on('callback_query', msg => {
-		const data = msg.data;
-		if (data === '18') {
-			result++;
-		}
-		if (data >= 17 && data <= 20) {
-			const rightAnswer = '18';
-			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question5Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
-				.then(() => {
-					return bot.sendPhoto(chatId, images['5']);
-				})
-				.then(() => {
-					switch (data) {
-						case '17':
-							reply = answers[5][1];
-							break;
-						case '18':
-							reply = answers[5][2];
-							break;
-						case '19':
-							reply = answers[5][3];
-							break;
-						case '20':
-							reply = answers[5][4];
-							break;
-						default:
-							reply = '';
-					}
-					return bot.sendMessage(chatId, reply, continueOptions['5']);
-				})
-		}
-	});
-}
-
-const sixthQuestion = (chatId) => {
-	bot.sendMessage(chatId, testQuestions['6'], question6Options);
-	let reply = '';
-	bot.on('callback_query', msg => {
-		const data = msg.data;
-		if (data === '21') {
-			result++;
-		}
-		if (data >= 21 && data <= 24) {
-			const rightAnswer = '21';
-			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question6Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
-				.then(() => {
-					return bot.sendPhoto(chatId, images['6']);
-				})
-				.then(() => {
-					switch (data) {
-						case '21':
-							reply = answers[6][1];
-							break;
-						case '22':
-							reply = answers[6][2];
-							break;
-						case '23':
-							reply = answers[6][3];
-							break;
-						case '24':
-							reply = answers[6][4];
-							break;
-						default:
-							reply = '';
-					}
-					return bot.sendMessage(chatId, reply, continueOptions['6']);
-				})
-		}
-	});
-}
-
-const sevenQuestion = (chatId) => {
-	bot.sendMessage(chatId, testQuestions['7'], question7Options);
-	let reply = '';
-	bot.on('callback_query', msg => {
-		const data = msg.data;
-		if (data === '27') {
-			result++;
-		}
-		if (data >= 25 && data <= 28) {
-			const rightAnswer = '27';
-			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question7Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
-				.then(() => {
-					return bot.sendPhoto(chatId, images['7']);
-				})
-				.then(() => {
-					switch (data) {
-						case '25':
-							reply = answers[7][1];
-							break;
-						case '26':
-							reply = answers[7][2];
-							break;
-						case '27':
-							reply = answers[7][3];
-							break;
-						case '28':
-							reply = answers[7][4];
-							break;
-						default:
-							reply = '';
-					}
-					return bot.sendMessage(chatId, reply, continueOptions['7']);
-				})
-		}
-	});
-}
-
-const eightQuestion = (chatId) => {
-	bot.sendMessage(chatId, testQuestions['8'], question8Options);
-	let reply = '';
-	bot.on('callback_query', msg => {
-		const data = msg.data;
-		if (data === '31') {
-			result++;
-		}
-		if (data >= 29 && data <= 32) {
-			const rightAnswer = '31';
-			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question8Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
-				.then(() => {
-					return bot.sendPhoto(chatId, images['8']);
-				})
-				.then(() => {
-					switch (data) {
-						case '29':
-							reply = answers[8][1];
-							break;
-						case '30':
-							reply = answers[8][2];
-							break;
-						case '31':
-							reply = answers[8][3];
-							break;
-						case '32':
-							reply = answers[8][4];
-							break;
-						default:
-							reply = '';
-					}
-					return bot.sendMessage(chatId, reply, continueOptions['8']);
-				})
-		}
-	});
-}
-
-const nineQuestion = (chatId) => {
-	bot.sendMessage(chatId, testQuestions['9'], question9Options);
-	let reply = '';
-	bot.on('callback_query', msg => {
-		const data = msg.data;
-		if (data === '33') {
-			result++;
-		}
-		if (data >= 33 && data <= 36) {
-			const rightAnswer = '33';
-			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question9Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
-				.then(() => {
-					return bot.sendPhoto(chatId, images['9']);
-				})
-				.then(() => {
-					switch (data) {
-						case '33':
-							reply = answers[9][1];
-							break;
-						case '34':
-							reply = answers[9][2];
-							break;
-						case '35':
-							reply = answers[9][3];
-							break;
-						case '36':
-							reply = answers[9][4];
-							break;
-						default:
-							reply = '';
-					}
-					return bot.sendMessage(chatId, reply, continueOptions['9']);
-				})
-		}
-	});
-}
-
-const tenQuestion = (chatId) => {
-	bot.sendMessage(chatId, testQuestions['10'], question10Options);
-	let reply = '';
-	bot.on('callback_query', msg => {
-		const data = msg.data;
-		if (data === '38') {
-			result++;
-		}
-		if (data >= 37 && data <= 40) {
-			const rightAnswer = '38';
-			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(question10Options, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
-				.then(() => {
-					return bot.sendPhoto(chatId, images['10']);
-				})
-				.then(() => {
-					switch (data) {
-						case '37':
-							reply = answers[10][1];
-							break;
-						case '38':
-							reply = answers[10][2];
-							break;
-						case '39':
-							reply = answers[10][3];
-							break;
-						case '40':
-							reply = answers[10][4];
-							break;
-						default:
-							reply = '';
-					}
-					return bot.sendMessage(chatId, reply, continueOptions['10']);
-				})
-		}
-	});
 }
 
 const calculateResult = (chatId) => {
@@ -496,7 +127,7 @@ const start = () => {
 		if (text === '/game') {
 			await bot.sendMessage(chatId, 'Погнали!');
 			result = 0;
-			firstQuestion(chatId);
+			generateQuestion(chatId, true, '1', question1Options, images['1'], 1);
 			return;
 		}
 
@@ -507,34 +138,34 @@ const start = () => {
 		const chatId = msg.message.chat.id;
 		switch (msg.data) {
 			case 'question1':
-				firstQuestion(chatId);
+				generateQuestion(chatId, true, '1', question1Options, images['1'], 1);
 				break;
 			case 'question2':
-				secondQuestion(chatId);
+				generateQuestion(chatId, false, '7', question2Options, images['2'], 2);
 				break;
 			case 'question3':
-				thirdQuestion(chatId);
+				generateQuestion(chatId, false, '12', question3Options, images['3'], 3);
 				break;
 			case 'question4':
-				fourthQuestion(chatId);
+				generateQuestion(chatId, false, '16', question4Options, images['4'], 4);
 				break;
 			case 'question5':
-				fifthQuestion(chatId);
+				generateQuestion(chatId, false, '18', question5Options, images['5'], 5);
 				break;
 			case 'question6':
-				sixthQuestion(chatId);
+				generateQuestion(chatId, false, '21', question6Options, images['6'], 6);
 				break;
 			case 'question7':
-				sevenQuestion(chatId);
+				generateQuestion(chatId, false, '27', question7Options, images['7'], 7);
 				break;
 			case 'question8':
-				eightQuestion(chatId);
+				generateQuestion(chatId, false, '31', question8Options, images['8'], 8);
 				break;
 			case 'question9':
-				nineQuestion(chatId);
+				generateQuestion(chatId, false, '33', question9Options, images['9'], 9);
 				break;
 			case 'question10':
-				tenQuestion(chatId);
+				generateQuestion(chatId, false, '38', question10Options, images['10'], 10);
 				break;
 			case 'finish':
 				calculateResult(chatId);
