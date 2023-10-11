@@ -405,20 +405,20 @@ const tenQuestion = (chatId) => {
 const calculateResult = (chatId) => {
 	bot.sendMessage(chatId, `Ваш результат: ${result} из 10`);
 	if (result <= 3) {
-		bot.sendMessage(chatId, 'Атата. Кажется, ты совсем забыл о мире Гарри, или вовсе не читал книг. Это нужно срочно исправить!');
-		return bot.sendPhoto(chatId, 'https://tlgrm.ru/_/stickers/bc6/72e/bc672eba-cdc5-4458-99ce-cd14094e6257/12.jpg');
+		bot.sendMessage(chatId, 'Безобразие! Кажется, ты совсем забыл о мире Гарри, или вовсе не читал книг. Это нужно срочно исправить, а то чё как магл!');
+		return bot.sendPhoto(chatId, './image/final1.jpg');
 	}
 	if (result > 3 && result <= 6) {
-		bot.sendMessage(chatId, 'Хороший результат! Вот тебе Гарри-милаш');
-		return bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/b69/f11/b69f1114-f754-4386-9d98-093841e9d4bb/1.jpg');
+		bot.sendMessage(chatId, 'Хороший результат! Гарри доволен)');
+		return bot.sendSticker(chatId, './image/final2.jpg');
 	}
 	if (result > 6 && result <= 9) {
-		bot.sendMessage(chatId, 'Отлично! Ты великолепна как Гермиона Грейнджер (книжная!). Вот тебе за это Эмма Уотсон');
-		return bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/388/83a/38883a01-9caa-4a91-8a50-cf1ae9a7cfa7/6.jpg');
+		bot.sendMessage(chatId, 'Отлично! Ты великолепен как Гермиона Грейнджер (книжная!) ;)');
+		return bot.sendSticker(chatId, './image/final3.jpg');
 	}
 	if (result === 10) {
 		bot.sendMessage(chatId, 'Вау!!!! 100 баллов Гриффиндору!!! Ты великолепен!');
-		return bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/b69/f11/b69f1114-f754-4386-9d98-093841e9d4bb/8.webp');
+		return bot.sendSticker(chatId, './image/final4.webp');
 	}
 };
 
