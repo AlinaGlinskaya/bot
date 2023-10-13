@@ -40,13 +40,11 @@ const generateInlineKeyboard = (options, data, rightAnswer) => {
 
 const generateQuestion = (
 	chatId,
-	first,
 	rightAnswer,
 	questionOptions,
-	image,
 	questionNumber
-	) => {
-	if (first) {
+) => {
+	if (questionNumber === 1) {
 		result = 0;
 	}
 	bot.sendMessage(chatId, testQuestions[questionNumber], questionOptions);
@@ -59,7 +57,7 @@ const generateQuestion = (
 		if (ranges[questionNumber].includes(data)) {
 			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(questionOptions, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
 				.then(() => {
-					return bot.sendPhoto(chatId, image);
+					return bot.sendPhoto(chatId, images[questionNumber]);
 				})
 				.then(() => {
 					switch (data) {
@@ -127,45 +125,45 @@ const start = () => {
 		if (text === '/game') {
 			await bot.sendMessage(chatId, 'Погнали!');
 			result = 0;
-			generateQuestion(chatId, true, '1', question1Options, images['1'], 1);
+			generateQuestion(chatId, '1', question1Options, 1);
 			return;
 		}
 
-		return bot.sendMessage(chatId, 'Я всего лишь бот, я не знаю такой команды, попробуйте ещё раз!)');
+		return bot.sendMessage(chatId, 'Я всего лишь бот, я не знаю такой команды, попробуй ещё раз!)');
 	});
 
 	bot.on('callback_query', msg => {
 		const chatId = msg.message.chat.id;
 		switch (msg.data) {
 			case 'question1':
-				generateQuestion(chatId, true, '1', question1Options, images['1'], 1);
+				generateQuestion(chatId, '1', question1Options, 1);
 				break;
 			case 'question2':
-				generateQuestion(chatId, false, '7', question2Options, images['2'], 2);
+				generateQuestion(chatId, '7', question2Options, 2);
 				break;
 			case 'question3':
-				generateQuestion(chatId, false, '12', question3Options, images['3'], 3);
+				generateQuestion(chatId, '12', question3Options, 3);
 				break;
 			case 'question4':
-				generateQuestion(chatId, false, '16', question4Options, images['4'], 4);
+				generateQuestion(chatId, '16', question4Options, 4);
 				break;
 			case 'question5':
-				generateQuestion(chatId, false, '18', question5Options, images['5'], 5);
+				generateQuestion(chatId, '18', question5Options, 5);
 				break;
 			case 'question6':
-				generateQuestion(chatId, false, '21', question6Options, images['6'], 6);
+				generateQuestion(chatId, '21', question6Options, 6);
 				break;
 			case 'question7':
-				generateQuestion(chatId, false, '27', question7Options, images['7'], 7);
+				generateQuestion(chatId, '27', question7Options, 7);
 				break;
 			case 'question8':
-				generateQuestion(chatId, false, '31', question8Options, images['8'], 8);
+				generateQuestion(chatId, '31', question8Options, 8);
 				break;
 			case 'question9':
-				generateQuestion(chatId, false, '33', question9Options, images['9'], 9);
+				generateQuestion(chatId, '33', question9Options, 9);
 				break;
 			case 'question10':
-				generateQuestion(chatId, false, '38', question10Options, images['10'], 10);
+				generateQuestion(chatId, '38', question10Options, 10);
 				break;
 			case 'finish':
 				calculateResult(chatId);
