@@ -40,50 +40,49 @@ const generateInlineKeyboard = (options, data, rightAnswer) => {
 
 const generateQuestion = async (
 	chatId,
-	rightAnswer,
 	questionOptions,
 	questionNumber
 ) => {
 	if (questionNumber === 1) {
 		result = 0;
 	}
-	await bot.sendMessage(chatId, testQuestions[questionNumber], questionOptions);
-	let reply = '';
-	bot.on('callback_query', async msg => {
-		const data = msg.data;
-		if (ranges[questionNumber].includes(data)) {
-			await bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(questionOptions, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
-				.then(() => {
-					return bot.sendPhoto(chatId, images[questionNumber]);
-				})
-				.then(() => {
-					switch (data) {
-						case ranges[questionNumber][0]:
-							reply = answers[questionNumber][1];
-							break;
-						case ranges[questionNumber][1]:
-							reply = answers[questionNumber][2];
-							break;
-						case ranges[questionNumber][2]:
-							reply = answers[questionNumber][3];
-							break;
-						case ranges[questionNumber][3]:
-							reply = answers[questionNumber][4];
-							break;
-						default:
-							reply = '';
-					}
-				})
-				.then(() => {
-					bot.sendMessage(chatId, reply, continueOptions[questionNumber]);
-					if (data === rightAnswer) {
-						return result++;
-					}
-					return result;
-				})
-		}
-	})
+	return bot.sendMessage(chatId, testQuestions[questionNumber], questionOptions);
 }
+
+const generateAnswer = async (chatId, questionOptions, questionNumber, data, msgId, rightAnswer) => {
+	let reply = '';
+	if (ranges[questionNumber].includes(data)) {
+		await bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(questionOptions, data, rightAnswer) }, { chat_id: chatId, message_id: msgId })
+			.then(() => {
+				return bot.sendPhoto(chatId, images[questionNumber]);
+			})
+			.then(() => {
+				switch (data) {
+					case ranges[questionNumber][0]:
+						reply = answers[questionNumber][1];
+						break;
+					case ranges[questionNumber][1]:
+						reply = answers[questionNumber][2];
+						break;
+					case ranges[questionNumber][2]:
+						reply = answers[questionNumber][3];
+						break;
+					case ranges[questionNumber][3]:
+						reply = answers[questionNumber][4];
+						break;
+					default:
+						reply = '';
+				}
+			})
+			.then(() => {
+				bot.sendMessage(chatId, reply, continueOptions[questionNumber]);
+				if (data === rightAnswer) {
+					return result++;
+				}
+				return result;
+			})
+	}
+};
 
 const calculateResult = (chatId) => {
 	bot.sendMessage(chatId, `Ваш результат: ${result} из 10`);
@@ -129,7 +128,7 @@ const start = () => {
 		if (text === '/game') {
 			await bot.sendMessage(chatId, 'Погнали!');
 			result = 0;
-			generateQuestion(chatId, '1', question1Options, 1);
+			generateQuestion(chatId, question1Options, 1);
 			return;
 		}
 
@@ -138,36 +137,68 @@ const start = () => {
 
 	bot.on('callback_query', msg => {
 		const chatId = msg.message.chat.id;
-		switch (msg.data) {
+		const msgId = msg.message.message_id;
+		const data = msg.data;
+		if (data >= 1 && data <= 4) {
+			generateAnswer(chatId, question1Options, 1, data, msgId, '1');
+		}
+		if (data >= 5 && data <= 8) {
+			generateAnswer(chatId, question2Options, 2, data, msgId, '7');
+		}
+		if (data >= 9 && data <= 12) {
+			generateAnswer(chatId, question3Options, 3, data, msgId, '12');
+		}
+		if (data >= 13 && data <= 16) {
+			generateAnswer(chatId, question4Options, 4, data, msgId, '16');
+		}
+		if (data >= 17 && data <= 20) {
+			generateAnswer(chatId, question5Options, 5, data, msgId, '18');
+		}
+		if (data >= 21 && data <= 24) {
+			generateAnswer(chatId, question6Options, 6, data, msgId, '21');
+		}
+		if (data >= 25 && data <= 28) {
+			generateAnswer(chatId, question7Options, 7, data, msgId, '27');
+		}
+		if (data >= 29 && data <= 32) {
+			generateAnswer(chatId, question8Options, 8, data, msgId, '31');
+		}
+		if (data >= 33 && data <= 36) {
+			generateAnswer(chatId, question9Options, 9, data, msgId, '33');
+		}
+		if (data >= 37 && data <= 40) {
+			generateAnswer(chatId, question10Options, 10, data, msgId, '38');
+		}
+		switch (data) {
 			case 'question1':
-				generateQuestion(chatId, '1', question1Options, 1);
+				generateQuestion(chatId, question1Options, 1);
 				break;
 			case 'question2':
-				generateQuestion(chatId, '7', question2Options, 2);
+				generateQuestion(chatId, question2Options, 2);
 				break;
 			case 'question3':
-				generateQuestion(chatId, '12', question3Options, 3);
+				generateQuestion(chatId, question3Options, 3);
 				break;
 			case 'question4':
-				generateQuestion(chatId, '16', question4Options, 4);
+				generateQuestion(chatId, question4Options, 4);
 				break;
 			case 'question5':
-				generateQuestion(chatId, '18', question5Options, 5);
+				generateQuestion(chatId, question5Options, 5);
 				break;
 			case 'question6':
-				generateQuestion(chatId, '21', question6Options, 6);
+				generateQuestion(chatId, question6Options, 6);
 				break;
 			case 'question7':
-				generateQuestion(chatId, '27', question7Options, 7);
+				generateQuestion(chatId, question7Options, 7);
 				break;
 			case 'question8':
-				generateQuestion(chatId, '31', question8Options, 8);
+				generateQuestion(chatId, question8Options, 8);
 				break;
 			case 'question9':
-				generateQuestion(chatId, '33', question9Options, 9);
+				generateQuestion(chatId, question9Options, 9);
 				break;
 			case 'question10':
-				generateQuestion(chatId, '38', question10Options, 10);
+				generateQuestion(chatId, question10Options, 10);
 				break;
 			case 'finish':
 				calculateResult(chatId);
