@@ -38,7 +38,7 @@ const generateInlineKeyboard = (options, data, rightAnswer) => {
 	return keyboard;
 };
 
-const generateQuestion = (
+const generateQuestion = async (
 	chatId,
 	rightAnswer,
 	questionOptions,
@@ -47,15 +47,12 @@ const generateQuestion = (
 	if (questionNumber === 1) {
 		result = 0;
 	}
-	bot.sendMessage(chatId, testQuestions[questionNumber], questionOptions);
+	await bot.sendMessage(chatId, testQuestions[questionNumber], questionOptions);
 	let reply = '';
-	bot.on('callback_query', msg => {
+	bot.on('callback_query', async msg => {
 		const data = msg.data;
-		if (data === rightAnswer) {
-			result++;
-		}
 		if (ranges[questionNumber].includes(data)) {
-			bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(questionOptions, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
+			await bot.editMessageReplyMarkup({ inline_keyboard: generateInlineKeyboard(questionOptions, data, rightAnswer) }, { chat_id: chatId, message_id: msg.message.message_id })
 				.then(() => {
 					return bot.sendPhoto(chatId, images[questionNumber]);
 				})
@@ -76,7 +73,13 @@ const generateQuestion = (
 						default:
 							reply = '';
 					}
-					return bot.sendMessage(chatId, reply, continueOptions[questionNumber]);
+				})
+				.then(() => {
+					bot.sendMessage(chatId, reply, continueOptions[questionNumber]);
+					if (data === rightAnswer) {
+						return result++;
+					}
+					return result;
 				})
 		}
 	})
@@ -90,15 +93,15 @@ const calculateResult = (chatId) => {
 	}
 	if (result > 3 && result <= 6) {
 		bot.sendMessage(chatId, 'Неплохой результат для такого сложного теста! Гарри доволен)');
-		return bot.sendSticker(chatId, './image/final2.jpg');
+		return bot.sendPhoto(chatId, './image/final2.jpg');
 	}
 	if (result > 6 && result <= 9) {
 		bot.sendMessage(chatId, 'Отлично! Ты прекрасен как Гермиона Грейнджер (книжная!) ;)');
-		return bot.sendSticker(chatId, './image/final3.jpg');
+		return bot.sendPhoto(chatId, './image/final3.jpg');
 	}
 	if (result === 10) {
 		bot.sendMessage(chatId, 'Вау!!!! 100 баллов Гриффиндору!!! Ты великолепен!');
-		return bot.sendSticker(chatId, './image/final4.webp');
+		return bot.sendPhoto(chatId, './image/final4.webp');
 	}
 };
 
@@ -112,6 +115,7 @@ const start = () => {
 	bot.on('message', async msg => {
 		const text = msg.text;
 		const chatId = msg.chat.id;
+		result = 0;
 
 		if (text === '/start') {
 			await bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/656/5cf/6565cf8c-df52-38ad-9982-b4f3fdb92873/4.webp');
@@ -168,6 +172,8 @@ const start = () => {
 			case 'finish':
 				calculateResult(chatId);
 				break;
+			default:
+				return;
 		}
 	});
 };
